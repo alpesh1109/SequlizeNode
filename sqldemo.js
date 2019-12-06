@@ -6,17 +6,7 @@ var mssql = require('mssql');
 var bodyparser = require('body-parser');
 var cookieparser = require('cookie-parser');
 var MyStaticEmailClass = require("./public/Logic/Mail");
-const axios = require('axios');
-//var redis = require("redis"),
-//    client = redis.createClient({
-//        host: process.env.REDIS_HOST || '127.0.0.1'
-//    });
-////const client = redis.createClient();
-//const responseTime = require('response-time');
-//var CacheService = require("./cache.service");
-//const ttl = 60 * 60 * 1; // cache for 1 Hour
-//const cache = new CacheService(ttl); // Create a new cache service instance
-var DB = require('./databse');
+
 
 var cache = require('memory-cache');
 let memCache = new cache.Cache();
@@ -37,9 +27,7 @@ let cacheMiddleware = (duration) => {
         }
     }
 }
-//client.on('error', (err) => {
-//    console.log("Error " + err);
-//});
+
 
 var config = {
     user: "sqluser",
@@ -50,8 +38,6 @@ var config = {
     options:
     {
         trustedConnection: true,
-        //encrypt: true,
-        //useUTC: true,
         connectTimeout: 1000000,
         requestTimeout: 1000000,
         textsize: '2147483647',
@@ -210,28 +196,7 @@ app.use(express.static("public"));
 
 app.get(routes.products.get, cacheMiddleware(10), function (req, res) {
 
-    //var conn = new mssql.ConnectionPool(config);
-
-    //return cache.get('myKey', () => conn.connect().then(function () {
-    //    debugger;
-    //    var _sqlRequest = new mssql.Request(conn);
-    //    _sqlRequest.execute('GetProduct').then((recordsets) => {
-    //        //debugger;
-    //        res.json(recordsets.recordsets[0]);
-    //    })
-    //})
-
-    //)
-
-    //return cache.get('mykey', () => DB.then((connection) =>
-
-    //    connection.execute('GetProduct').then((rows) => {
-    //        return rows[0];
-    //    })
-    //)).then((result) => {
-    //    return result;
-    //})
-
+    
     try {
         var conn = new mssql.ConnectionPool(config);
         conn.connect().then(function () {
@@ -283,18 +248,6 @@ app.get(routes.productdetailsbyid.get, cacheMiddleware(10), function (req, res) 
 });
 
 app.get(routes.productcat.get, cacheMiddleware(10), function (req, res) {
-
-    //var conn = new mssql.ConnectionPool(config);
-    //var id = req.query.id;
-    //return cache.get(id, () => conn.connect().then(function () {
-    //    var _sqlRequest = new mssql.Request(conn);
-    //    _sqlRequest.input('pcatId', mssql.NVarChar, id);
-    //    _sqlRequest.execute('GetProductByCategory').then((recordsets) => {
-    //        res.json(recordsets.recordsets[0]);
-    //    })
-    //})
-
-    //)
 
     try {
         var id = req.query.id;
