@@ -12,7 +12,7 @@
   "author": "JSA",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "mysql2": "^1.5.3",
     "sequelize": "^4.44.3"
   }
